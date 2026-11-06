@@ -1,0 +1,22 @@
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependências (se um dia usar)
+node_modules/
+package-lock.json
+
+# Ambiente
+.env
+.env.local
+*.log
+
+# Build
+dist/
+build/

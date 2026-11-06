@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Urna Eletrônica do Centro Acadêmico — votação online segura e auditável.">
+    <meta name="theme-color" content="#087c43">
+    <meta name="color-scheme" content="light">
+    <title>Urna Eletrônica - CA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <main class="urna">
+
+        <header class="cabecalho">
+            <div class="logo">CA <span>URNA</span></div>
+            <div class="identificacao">
+                URNA ELETRÔNICA
+            </div>
+        </header>
+
+        <div class="conteudo">
+
+            <!-- ═══════════════════════════════════════════════════ -->
+            <!-- TELA 0 — STATUS                                      -->
+            <!-- ═══════════════════════════════════════════════════ -->
+            <section id="tela-status" class="tela-center ativa" aria-labelledby="titulo-status">
+                <div class="status-box">
+                    <div class="logo-icon" aria-hidden="true">▣</div>
+                    <h1 id="titulo-status">URNA<br><span>ELETRÔNICA</span></h1>
+                    <p id="mensagem-status" class="status-msg" role="status" aria-live="polite">
+                        Verificando situação da eleição...
+                    </p>
+                    <div class="spinner" id="spinner" aria-hidden="true"></div>
+                    <button type="button" class="btn-retry" id="btn-retry-status" style="display: none;">
+                        Tentar novamente
+                    </button>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════ -->
+            <!-- TELA 1 — IDENTIFICAÇÃO                               -->
+            <!-- ═══════════════════════════════════════════════════ -->
+            <section id="tela-identificacao" class="tela-grid" aria-labelledby="titulo-identificacao">
+                <div class="tela">
+                    <h2 id="titulo-identificacao">Identifique-se</h2>
+                    <p>Informe sua matrícula para iniciar</p>
+                    <div class="display-campo">
+                        <label for="input-matricula" class="sr-only">Matrícula do eleitor</label>
+                        <input
+                            type="text"
+                            id="input-matricula"
+                            class="urna-input"
+                            inputmode="numeric"
+                            placeholder="—"
+                            maxlength="20"
+                            autocomplete="off"
+                            aria-describedby="msg-identificacao">
+                    </div>
+                    <p id="msg-identificacao" class="erro" role="alert" aria-live="polite"></p>
+                    <p class="instrucao">Digite sua matrícula no teclado ao lado e pressione CONFIRMA.</p>
+                </div>
+                <div class="teclado">
+                    <div class="teclas">
+                        <button type="button" class="tecla" data-num="1">1</button>
+                        <button type="button" class="tecla" data-num="2">2</button>
+                        <button type="button" class="tecla" data-num="3">3</button>
+                        <button type="button" class="tecla" data-num="4">4</button>
+                        <button type="button" class="tecla" data-num="5">5</button>
+                        <button type="button" class="tecla" data-num="6">6</button>
+                        <button type="button" class="tecla" data-num="7">7</button>
+                        <button type="button" class="tecla" data-num="8">8</button>
+                        <button type="button" class="tecla" data-num="9">9</button>
+                        <button type="button" class="tecla" disabled aria-hidden="true"></button>
+                        <button type="button" class="tecla" data-num="0">0</button>
+                        <button type="button" class="tecla" disabled aria-hidden="true"></button>
+                        <button type="button" class="tecla acao branco" data-action="branco" disabled>BRANCO</button>
+                        <button type="button" class="tecla acao corrige" data-action="corrige">CORRIGE</button>
+                        <button type="button" class="tecla acao confirma" data-action="confirma">CONFIRMA</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════ -->
+            <!-- TELA 2 — AUTENTICAÇÃO                                -->
+            <!-- ═══════════════════════════════════════════════════ -->
+            <section id="tela-codigo" class="tela-grid" aria-labelledby="titulo-codigo">
+                <div class="tela">
+                    <h2 id="titulo-codigo">Autenticação</h2>
+                    <p class="saudacao-nome">
+                        Olá, <strong id="nome-votante-codigo"></strong>!
+                    </p>
+                    <p>Enviamos um código para:</p>
+                    <p class="email-mostrado" id="email-mascarado"></p>
+                    <div class="display-campo">
+                        <label for="input-codigo" class="sr-only">Código de 6 dígitos</label>
+                        <input
+                            type="text"
+                            id="input-codigo"
+                            class="urna-input codigo-input"
+                            inputmode="numeric"
+                            placeholder="000000"
+                            maxlength="6"
+                            autocomplete="one-time-code"
+                            aria-describedby="msg-codigo">
+                    </div>
+                    <p class="tempo-info">⏱ O código expira em 1 hora</p>
+                    <p id="msg-codigo" class="erro" role="alert" aria-live="polite"></p>
+                    <div class="acoes-secundarias">
+                        <button type="button" class="btn-link" id="btn-voltar-identificacao">
+                            ← Voltar
+                        </button>
+                        <button type="button" class="btn-link" id="btn-reenviar">
+                            Reenviar código
+                        </button>
+                    </div>
+                    <p class="instrucao">Digite os 6 dígitos no teclado e pressione CONFIRMA.</p>
+                </div>
+                <div class="teclado">
+                    <div class="teclas">
+                        <button type="button" class="tecla" data-num="1">1</button>
+                        <button type="button" class="tecla" data-num="2">2</button>
+                        <button type="button" class="tecla" data-num="3">3</button>
+                        <button type="button" class="tecla" data-num="4">4</button>
+                        <button type="button" class="tecla" data-num="5">5</button>
+                        <button type="button" class="tecla" data-num="6">6</button>
+                        <button type="button" class="tecla" data-num="7">7</button>
+                        <button type="button" class="tecla" data-num="8">8</button>
+                        <button type="button" class="tecla" data-num="9">9</button>
+                        <button type="button" class="tecla" disabled aria-hidden="true"></button>
+                        <button type="button" class="tecla" data-num="0">0</button>
+                        <button type="button" class="tecla" disabled aria-hidden="true"></button>
+                        <button type="button" class="tecla acao branco" data-action="branco" disabled>BRANCO</button>
+                        <button type="button" class="tecla acao corrige" data-action="corrige">CORRIGE</button>
+                        <button type="button" class="tecla acao confirma" data-action="confirma">CONFIRMA</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════ -->
+            <!-- TELA 3 — VOTAÇÃO                                     -->
+            <!-- ═══════════════════════════════════════════════════ -->
+            <section id="tela-votacao" class="tela-grid" aria-labelledby="titulo-votacao">
+                <div class="tela tela-voto">
+                    <header class="screen-header">
+                        <div class="screen-header-left">
+                            <span class="screen-label" id="titulo-votacao">SEU VOTO PARA</span>
+                            <span class="screen-cargo" id="screen-cargo">DIRETÓRIO</span>
+                        </div>
+                        <div class="screen-votante">
+                            <span class="screen-votante-label">VOTANTE</span>
+                            <span id="nome-votante-votacao" class="screen-votante-nome"></span>
+                        </div>
+                    </header>
+                    <div class="screen-body">
+                        <div class="vote-slots" aria-label="Dígitos digitados">
+                            <div class="vote-slot" id="slot-1"></div>
+                            <div class="vote-slot" id="slot-2"></div>
+                        </div>
+                        <div class="vote-info" id="vote-info" aria-live="polite">
+                            <p class="info-hint">Digite o número da chapa</p>
+                        </div>
+                    </div>
+                    <footer class="screen-footer">
+                        <div class="footer-line">
+                            <span class="footer-key footer-green">CONFIRMA</span>
+                            <span>para confirmar este voto</span>
+                        </div>
+                        <div class="footer-line">
+                            <span class="footer-key footer-orange">CORRIGE</span>
+                            <span>para reiniciar</span>
+                        </div>
+                    </footer>
+                </div>
+                <div class="teclado">
+                    <div class="teclas">
+                        <button type="button" class="tecla" data-num="1">1</button>
+                        <button type="button" class="tecla" data-num="2">2</button>
+                        <button type="button" class="tecla" data-num="3">3</button>
+                        <button type="button" class="tecla" data-num="4">4</button>
+                        <button type="button" class="tecla" data-num="5">5</button>
+                        <button type="button" class="tecla" data-num="6">6</button>
+                        <button type="button" class="tecla" data-num="7">7</button>
+                        <button type="button" class="tecla" data-num="8">8</button>
+                        <button type="button" class="tecla" data-num="9">9</button>
+                        <button type="button" class="tecla" disabled aria-hidden="true"></button>
+                        <button type="button" class="tecla" data-num="0">0</button>
+                        <button type="button" class="tecla" disabled aria-hidden="true"></button>
+                        <button type="button" class="tecla acao branco" data-action="branco">BRANCO</button>
+                        <button type="button" class="tecla acao corrige" data-action="corrige">CORRIGE</button>
+                        <button type="button" class="tecla acao confirma" data-action="confirma">CONFIRMA</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════ -->
+            <!-- TELA 4 — CONFIRMAÇÃO                                 -->
+            <!-- ═══════════════════════════════════════════════════ -->
+            <section id="tela-confirmacao" class="tela-grid" aria-labelledby="titulo-confirmacao">
+                <div class="tela">
+                    <h2 id="titulo-confirmacao">Confirme seu voto</h2>
+                    <p>Você está votando em:</p>
+                    <div class="voto-final" id="voto-escolhido"></div>
+                    <p class="instrucao">CONFIRMA para registrar · CORRIGE para voltar à votação.</p>
+                </div>
+                <div class="teclado">
+                    <div class="teclas">
+                        <button type="button" class="tecla" disabled>1</button>
+                        <button type="button" class="tecla" disabled>2</button>
+                        <button type="button" class="tecla" disabled>3</button>
+                        <button type="button" class="tecla" disabled>4</button>
+                        <button type="button" class="tecla" disabled>5</button>
+                        <button type="button" class="tecla" disabled>6</button>
+                        <button type="button" class="tecla" disabled>7</button>
+                        <button type="button" class="tecla" disabled>8</button>
+                        <button type="button" class="tecla" disabled>9</button>
+                        <button type="button" class="tecla" disabled aria-hidden="true"></button>
+                        <button type="button" class="tecla" disabled>0</button>
+                        <button type="button" class="tecla" disabled aria-hidden="true"></button>
+                        <button type="button" class="tecla acao branco" data-action="branco" disabled>BRANCO</button>
+                        <button type="button" class="tecla acao corrige" data-action="corrige">CORRIGE</button>
+                        <button type="button" class="tecla acao confirma" data-action="confirma">CONFIRMAR</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════ -->
+            <!-- TELA 5 — FIM                                         -->
+            <!-- ═══════════════════════════════════════════════════ -->
+            <section id="tela-fim" class="tela-center" aria-labelledby="titulo-fim">
+                <div class="fim-screen">
+                    <h1 class="fim-title" id="titulo-fim">FIM</h1>
+                    <p class="fim-sub">Seu voto foi registrado com sucesso</p>
+                    <button type="button" class="btn-proximo" id="btn-proximo-eleitor">
+                        Próximo eleitor →
+                    </button>
+                    <p class="fim-auto">
+                        Retornando em <span id="fim-countdown">15</span>s...
+                    </p>
+                </div>
+            </section>
+
+        </div>
+
+        <footer class="rodape">
+            Eleições CAEPRO - 2027
+        </footer>
+
+    </main>
+
+    <div id="toast-container" class="toast-container" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
