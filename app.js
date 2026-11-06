@@ -2,8 +2,8 @@
 // 1. CONFIGURAÇÃO
 // ============================================
 const CONFIG = Object.freeze({
-    URL_APPS_SCRIPT: 'https://script.google.com/macros/s/AKfycbzpP5IaP01uBut6NKVq4gcUIo3D83fxTzq78CBUPLJnTWJpML-EpX6NTnSY6V5qlZq8/exec',
-    MAX_MATRICULA: 20,
+    URL_APPS_SCRIPT: 'https://script.google.com/macros/s/AKfycbxMBOqVJrnrW3SEVC4hWFwm4SVhOFnUAVqZwEamuFMVfoGvRqCw6xx5rIu0qr_3mts/exec',
+    MAX_MATRICULA: 11,
     MAX_CODIGO: 6,
     MAX_DIGITOS_CHAPA: 2,
     TIMEOUT_REDE: 15000,
