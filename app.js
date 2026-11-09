@@ -225,11 +225,13 @@ async function tentarConexao() {
 async function verificarMatricula() {
     if (state.enviando) return;
 
-    const matricula = document.getElementById('input-matricula').value.trim();
+    const inputMatricula = document.getElementById('input-matricula');
+    const matricula = inputMatricula.value.trim();
     const msg = document.getElementById('msg-identificacao');
 
     if (!matricula) {
         msg.textContent = 'Digite a matrícula.';
+        inputMatricula.focus();
         return;
     }
 
@@ -242,6 +244,9 @@ async function verificarMatricula() {
         if (data.erro) {
             somErro();
             msg.textContent = data.erro;
+            // Limpa o campo e devolve o foco para o usuário digitar de novo
+            inputMatricula.value = '';
+            inputMatricula.focus();
             return;
         }
 
@@ -264,6 +269,9 @@ async function verificarMatricula() {
     } catch (e) {
         somErro();
         msg.textContent = e.message;
+        // Em caso de falha de rede/exceção, também limpa para nova tentativa
+        inputMatricula.value = '';
+        inputMatricula.focus();
     } finally {
         state.enviando = false;
     }
@@ -352,11 +360,13 @@ async function validarCodigo() {
     if (state.enviando) return;
 
     const matricula = state.matriculaAtual;
-    const codigo = document.getElementById('input-codigo').value.trim();
+    const inputCodigo = document.getElementById('input-codigo');
+    const codigo = inputCodigo.value.trim();
     const msg = document.getElementById('msg-codigo');
 
     if (codigo.length !== CONFIG.MAX_CODIGO) {
         msg.textContent = `Digite os ${CONFIG.MAX_CODIGO} dígitos.`;
+        inputCodigo.focus();
         return;
     }
 
@@ -369,6 +379,9 @@ async function validarCodigo() {
         if (data.erro) {
             somErro();
             msg.textContent = data.erro;
+            // Limpa o código e devolve o foco para nova tentativa
+            inputCodigo.value = '';
+            inputCodigo.focus();
             return;
         }
         state.tokenVotacao = data.token;
@@ -381,6 +394,9 @@ async function validarCodigo() {
     } catch (e) {
         somErro();
         msg.textContent = e.message;
+        // Em caso de falha de rede/exceção, também limpa para nova tentativa
+        inputCodigo.value = '';
+        inputCodigo.focus();
     } finally {
         state.enviando = false;
     }
