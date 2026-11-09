@@ -17,6 +17,9 @@ package-lock.json
 .env.local
 *.log
 
+# Apps Script
+app_script.js
+
 # Build
 dist/
 build/
